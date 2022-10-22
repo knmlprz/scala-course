@@ -178,6 +178,67 @@ def printHello(hello: String = "Hello World"): Unit =
 Wcięty kod po znaku `=` traktuje się jako blok kodu tej funkcji. Jej równoważny zapis to:
 
 ```scala
-def 
+def printHello(hello: String = "Hello World"): Unit = {
+  println(hello)
+}
 ```
 
+### Klasy w Scali
+
+Klasy, czyli szablony obiektów definiuje się z pomocą słowa `class` nazwy klasy i parametrów konstruktora.
+
+```scala
+class Person(val name: String, val age: Int):
+  def greet(): Unit =
+    println(s"Hello $name")
+```
+
+instancję klasy tworzy się podając parametry dla jej konstrukora.
+
+```scala
+val person = Person("Piotr", 23)
+person.greet()
+println(person.age)
+```
+
+Kostruktorem klasy jest blok kodu, po `:` w deklaracji klasy. Na przykładzie klasy `Person` wygląda to tak.
+
+```scala
+class Person(val name: String, val age: Int):
+  // Konstruktor
+  println("Incjalizacja klasy")
+
+  def greet(): Unit =
+    println(s"Hello $name")
+
+  greet()
+
+  println("Koniec inicjalizacji")
+```
+
+co da nam wynik:
+```
+Incjalizacja klasy
+Hello Piotr
+Koniec inicjalizacji
+Hello Piotr
+23
+```
+
+w samym konstruktorze definować możemy także nowe pola.
+
+```scala
+class Person(val name: String, val age: Int):
+  val info = name + ", " + age 
+```
+
+do nowego pola możemy się odwołać:
+
+```scala
+person.age
+```
+
+A jak porównywać instancje klas? Otóż, instancje klas porównywane są przez referencję tj. 
+
+
+### Instrukcje sterujące
