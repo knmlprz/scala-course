@@ -1,5 +1,7 @@
 package com.prz.hello
 
-class Main {
+def printHello(hello: String = "Hello World"): Unit =
+  println(hello)
 
-}
+@main def run(): Unit =
+  printHello()
