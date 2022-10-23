@@ -1,16 +1,28 @@
 package com.prz.hello
 
-def printHello(hello: String = "Hello World"): Unit = {
-  println(hello)
-}
+import scala.io.Source.{fromURL, fromFile}
+import java.net.URL
+import java.io.{File, FileReader, FileWriter, IOException}
 
-class Person(val name: String, val age: Int):
-  val info = name + ", " + age
+def downloadFile(fileToDownload: URL, outName: String): Unit =
+  println(s"Tring to download file $fileToDownload")
+  try
+    val src = fromURL(fileToDownload)
+    val out = FileWriter(outName)
+    out.write(src.mkString)
+    out.close()
+    println("Done. Closing file.")
+  catch
+    case e: IOException => "Cannot download/save file."
 
 @main def run(): Unit =
-  val person = Person("Piotr", 23)
-  val person2 = Person("Piotr", 23)
-  if person == person2 then
-    println("Obiekty są równe")
-  else
-    println("Nie są równe.")
+  downloadFile(URL("https://wolnelektury.pl/media/book/txt/pan-tadeusz.txt"), "pan-tadeusz.txt")
+  val file = fromFile("pan-tadeusz.txt")
+  val res = file.getLines()
+    .flatMap(_.split(" "))
+    .map(_.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", ""))
+    .foldLeft(Map.empty[String, Int]) {
+      (counter, word) => counter + (word -> (counter.getOrElse(word, 0) + 1))
+    }.toList
+    .sortBy(_._2)
+    .foreach(println)

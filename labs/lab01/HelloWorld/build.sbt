@@ -6,3 +6,4 @@ lazy val root = (project in file("."))
   .settings(
     name := "HelloWorld"
   )
+  .enablePlugins(JavaAppPackaging)
