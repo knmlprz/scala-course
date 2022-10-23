@@ -238,7 +238,72 @@ do nowego pola możemy się odwołać:
 person.age
 ```
 
-A jak porównywać instancje klas? Otóż, instancje klas porównywane są przez referencję tj. 
+A jak porównywać instancje klas? Otóż, instancje klas porównywane są przez referencję tj. klasy są takie same, jeżeli wskazują na to samo miejsce w pamięci??
+
+Jeżeli chcemy mieć obiekty, które możemy porównywać scala daje nam dostęp do `case class`, które porównywane są poprzez wartości.
+
+```scala
+case class CPerson(name: String, age: Int)
+
+val person1 = CPerson("Piotr", 23)
+val person2 = CPerson("Piotr", 23)
+person1 == person2 // true
+```
+
+### Listy i tablice w skali
+
+Listy deklarujemy w następujący sposób.
+
+```scala
+val numbersList: List[Int] = List(1, 2, 3, 4, 5)
+println(numbersList) // Wypisze liczby
+```
+
+natomiast tablice tak.
+
+```scala
+val numbersArr: Array[Int] = Array(1, 2, 3, 4, 5)
+println(numbersArr) // Nie nie zadziała
+numbersArr.foreach(println) // Działa!
+```
+
+Listy przechowywane są jako linked-list tj. kolejne elementy zawierają wskaźnik na następny. Listy używane są tam gdzie nie wiemy ile elementów będziemy przechowywać, nie będziemy ich modyfikować oraz będziemy odczytywać je sekwencyjnie.
+
+Natomiast tablica z góry muszą mieć określony rozmiar (mogą mieć kilka wymiarów!). Ale pozwalają na szybki odczyt w dowolnej koleności.
+
+Przykładowe działania na tablicach i macierzach i listach.
+
+```scala
+// Podniesienie do kwadratu
+numbersArr.map((x: Int) => x*x)
+numbersList.map((x: Int) => x*x)
+
+// Map Reduce: suma kwadratów
+numbersArr.map((x: Int) => x*x).reduce((x, y) => x + y)
+numbersList.map((x: Int) => x*x).reduce((x, y) => x + y)
+
+// Suma
+numbersList.sum
+numbersList.sum
+```
 
 
 ### Instrukcje sterujące
+
+Składnia if/else wygląa
+
+```scala
+val age = 24
+if age > 18 then
+  println("Jesteś pełnoletni")
+else if age < 0 then
+  println("Wiek nie może być ujemny")
+else
+  println(s"Masz $age lat")
+```
+
+ponieważ if/else to wyrażenie, jego składnia może wyglądać też tak:
+
+```scala
+val result = if age < 0 then "Wiek nie może być ujemy" else "ok"
+```
