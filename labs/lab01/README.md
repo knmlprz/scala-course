@@ -126,7 +126,7 @@ val div = (x: Int, y: Int) => x / y
 
 Mając tą wiedzę możemy już napisać pierwszy program w scali
 
-## Hello world - pierwszy program
+## Pisanie programów 
 
 Zaczniemy od napisania hello world w scali. Wybierz folder `src/main/scala` i kliknij na niego prawym przyciskiem myszy. 
 
@@ -344,4 +344,30 @@ for
 do
   println(i + ", " + j)
 ```
+
+### Mapy
+
+To kolekcje skłądające się z par klucz-wartośc, podobnie jak `dict` w pythonie.
+
+```scala
+val words: Map[String, Int] = Map(
+  "Hello" -> 3,
+  "World" -> 5
+)
+```
+
+A do poszczególnych wartości możemy dostać się z pomocą:
+
+```scala
+words("Hello")
+words.getOrElse("Hello", "Ups")
+```
+
+A nowe klucze-wartości dodawać możemy:
+
+```scala
+val newMap = words + ("Nowe słowo" -> 6)
+```
+
+## Pierwszy poważny program
 
