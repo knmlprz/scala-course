@@ -258,6 +258,11 @@ Listy deklarujemy w następujący sposób.
 val numbersList: List[Int] = List(1, 2, 3, 4, 5)
 println(numbersList) // Wypisze liczby
 ```
+i kolejne elementy dodajemy z pomocą operatora `:+`
+
+```scala
+val newList = numbersList :+ 6
+```
 
 natomiast tablice tak.
 
@@ -269,7 +274,7 @@ numbersArr.foreach(println) // Działa!
 
 Listy przechowywane są jako linked-list tj. kolejne elementy zawierają wskaźnik na następny. Listy używane są tam gdzie nie wiemy ile elementów będziemy przechowywać, nie będziemy ich modyfikować oraz będziemy odczytywać je sekwencyjnie.
 
-Natomiast tablica z góry muszą mieć określony rozmiar (mogą mieć kilka wymiarów!). Ale pozwalają na szybki odczyt w dowolnej koleności.
+Natomiast tablice z góry muszą mieć określony rozmiar (mogą mieć kilka wymiarów!). Ale pozwalają na szybki odczyt w dowolnej koleności.
 
 Przykładowe działania na tablicach i macierzach i listach.
 
@@ -307,3 +312,36 @@ ponieważ if/else to wyrażenie, jego składnia może wyglądać też tak:
 ```scala
 val result = if age < 0 then "Wiek nie może być ujemy" else "ok"
 ```
+
+Pętle `for` pozwalają iterować się po kolejnych elementach tablic/list.
+
+```scala
+val numbersList: List[Int] = List(1, 2, 3, 4, 5)
+for
+  i <- numbersList
+do
+  println(i)
+```
+
+pętle for for pozwalają na iterację po kilku listach jednocześnie.
+
+```scala
+for
+  i <- numbersList
+  j <- numbersArr
+do
+  println(i + ", " + j)
+```
+
+a także iterować się tylko po elementach spełniających pewne warunki, te warunki w pętlach nazywamy `guards`
+
+```scala
+for
+  i <- numbersList
+  j <- numbersArr
+  if i % 2 == 0
+  if j % 2 == 0
+do
+  println(i + ", " + j)
+```
+
