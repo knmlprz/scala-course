@@ -371,3 +371,66 @@ val newMap = words + ("Nowe słowo" -> 6)
 
 ## Pierwszy poważny program
 
+Napiszemy klasyczny program wykorzystujący wiele kolekcji i możliwość integracji scali z javą. Zbudujemy program liczący słowa w scali. Plan jest następujący:
+
+1. Pobierzemy zbiór danych np. plik tekstowy ze strony wolne lektury
+2. Z pomocą operacji `map`, `flatMap`, `foldLeft` zliczymy ile razy wystąpiło dane słowo.
+
+
+```scala
+package com.prz.hello
+
+import scala.io.Source.{fromURL, fromFile}
+import java.net.URL
+import java.io.{File, FileReader, FileWriter, IOException}
+
+def downloadFile(fileToDownload: URL, outName: String): Unit =
+  println(s"Tring to download file $fileToDownload")
+  try
+    val src = fromURL(fileToDownload)
+    val out = FileWriter(outName)
+    out.write(src.mkString)
+    out.close()
+    println("Done. Closing file.")
+  catch
+    case e: IOException => "Cannot download/save file."
+
+@main def run(): Unit =
+  downloadFile(URL("https://wolnelektury.pl/media/book/txt/pan-tadeusz.txt"), "pan-tadeusz.txt")
+  val file = fromFile("pan-tadeusz.txt")
+  val res = file.getLines()
+    .flatMap(_.split(" "))
+    .map(_.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", ""))
+    .foldLeft(Map.empty[String, Int]) {
+      (counter, word) => counter + (word -> (counter.getOrElse(word, 0) + 1))
+    }.toList
+    .sortBy(_._2)
+    .foreach(println)
+```
+
+## Pakowanie programów
+
+Nasz program na ten moment wykorzystać możemy tylko na naszym komputerze. Żeby inni mogli z niego skorzystać, musimy spakować do do przenośnej formy, pliku `.jar`, którego będzie mozna uruchomić. Wykorzystamy do tego sbt. Ale najpierw musimy je rozszerzyć z pomocą pluginu.
+
+Pluginy w sbt dodaje się poleceniem `addSbtPlugin` w pliku `projects/plugins.sbt`. Zacznijmy zatem od utworzenia tego pliku.
+
+Następnie dodajmy do niego linijkę:
+```txt
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.4")
+```
+
+Teraz uruchom sbt shell i sprawdź czy plugin się załadował poleceniem `plugins`. Jak możesz zauważyć, część pluginów załadowała się, ale nie jest aktywowana w tym projekcie. Aby aktywować plugin należy wywołać metodę `enablePlugins` w pliku `build.sbt`. Przykładowy plik po dodaniu wygląda tak.
+
+```scala
+ThisBuild / version := "0.1.0-SNAPSHOT"
+
+ThisBuild / scalaVersion := "3.2.0"
+
+lazy val root = (project in file("."))
+  .settings(
+    name := "HelloWorld"
+  )
+  .enablePlugins(JavaAppPackaging)
+```
+
+Wróćmy do sbt shell. Wpisz polecenie `dist`. Powinno ono zbudować przenośny plik .zip, zawierający wszystko co potrzebne do uruchomienia projektu.
