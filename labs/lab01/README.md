@@ -10,8 +10,8 @@ Kurs ten prowadzony jest w środowisku InteliJ Community. I jest to jedyne wymag
 
 ## Utworzenie projektu
 
-Aby utworzyć nowy projekt dla języka Scala wybierz z wstążki 
-`File > New > Project`, następnie przy wyborze języka kliknij `+`, z listy wybierz `Scala` i kliknij `Install` przy ikonie scalii. Kliknij `OK` i wybierz `Scala`. 
+Aby utworzyć nowy projekt dla języka Scala wybierz z wstążki
+`File > New > Project`, następnie przy wyborze języka kliknij `+`, z listy wybierz `Scala` i kliknij `Install` przy ikonie scalii. Kliknij `OK` i wybierz `Scala`.
 
 Wybierz wersję `Scala: 3.2.0` oraz zaznacz `Download sources` zarówno dla Scali jaki i sbt.
 
@@ -58,7 +58,9 @@ Co do zmiennych niemutowalnych, to oznacza to iż nie możemy nadpisać jej wart
 ```scala
 number = 101
 ```
+
 i otrzymamy błąd:
+
 ```
 -- [E052] Type Error: ------------
 1 |number = 101
@@ -75,9 +77,11 @@ var canChange = 999
 ### Podstawowe typy danych w scali
 
 Tekst:
+
 ```scala
 val hello: String = "Hello world"
 ```
+
 przypominam, że możemy go formatować:
 
 ```scala
@@ -85,6 +89,7 @@ val helloNumber: String = s"Hello $number"
 ```
 
 Typy liczbowe:
+
 ```scala
 val wholeNumber: Int = 100 // liczby całkowite
 val floatNumber: Float = 1.0 // pojedyncza precyzja
@@ -101,6 +106,7 @@ println({
   temp + 50
 })
 ```
+
 Wypisze `95`.
 
 ### Funkcje
@@ -126,12 +132,11 @@ val div = (x: Int, y: Int) => x / y
 
 Mając tą wiedzę możemy już napisać pierwszy program w scali
 
-## Pisanie programów 
+## Pisanie programów
 
-Zaczniemy od napisania hello world w scali. Wybierz folder `src/main/scala` i kliknij na niego prawym przyciskiem myszy. 
+Zaczniemy od napisania hello world w scali. Wybierz folder `src/main/scala` i kliknij na niego prawym przyciskiem myszy.
 
-
-Następnie wybierz `New > Scala class`. Konwencja mówi iż nazwy pakietów (klasy tworzone są w ramach pakietów), powinny mieć nazwę `com.domena.pakiet.klasa`. Stwórzymy więc klasę `com.prz.hello.Main`. 
+Następnie wybierz `New > Scala class`. Konwencja mówi iż nazwy pakietów (klasy tworzone są w ramach pakietów), powinny mieć nazwę `com.domena.pakiet.klasa`. Stwórzymy więc klasę `com.prz.hello.Main`.
 Teraz w utworzonym pliku `Main` umieść kod:
 
 ```scala
@@ -143,18 +148,19 @@ package com.prz.hello
   println("Hello")
 ```
 
-Punktem startowym dla programów w scali jest metoda oznaczona `@main`. `:Unit` oznacza iż metoda ta nie zwraca, żadnych obiektów. 
+Punktem startowym dla programów w scali jest metoda oznaczona `@main`. `:Unit` oznacza iż metoda ta nie zwraca, żadnych obiektów.
 
-Program uruchamia się klikając w zielony trójkąt obok `@main`. 
+Program uruchamia się klikając w zielony trójkąt obok `@main`.
 
 ### Czym są metody
 
 Metody są podobne do funkcji. Definiuje się je podobnie jak powyżej:
 
 ```scala
-def printHello(hello: String = "Hello World"): Unit = 
+def printHello(hello: String = "Hello World"): Unit =
   println(hello)
 ```
+
 i wywołuje się je w następujący sposób:
 
 ```scala
@@ -217,6 +223,7 @@ class Person(val name: String, val age: Int):
 ```
 
 co da nam wynik:
+
 ```
 Incjalizacja klasy
 Hello Piotr
@@ -229,7 +236,7 @@ w samym konstruktorze definować możemy także nowe pola.
 
 ```scala
 class Person(val name: String, val age: Int):
-  val info = name + ", " + age 
+  val info = name + ", " + age
 ```
 
 do nowego pola możemy się odwołać:
@@ -258,6 +265,7 @@ Listy deklarujemy w następujący sposób.
 val numbersList: List[Int] = List(1, 2, 3, 4, 5)
 println(numbersList) // Wypisze liczby
 ```
+
 i kolejne elementy dodajemy z pomocą operatora `:+`
 
 ```scala
@@ -291,7 +299,6 @@ numbersList.map((x: Int) => x*x).reduce((x, y) => x + y)
 numbersList.sum
 numbersList.sum
 ```
-
 
 ### Instrukcje sterujące
 
@@ -376,7 +383,6 @@ Napiszemy klasyczny program wykorzystujący wiele kolekcji i możliwość integr
 1. Pobierzemy zbiór danych np. plik tekstowy ze strony wolne lektury
 2. Z pomocą operacji `map`, `flatMap`, `foldLeft` zliczymy ile razy wystąpiło dane słowo.
 
-
 ```scala
 package com.prz.hello
 
@@ -415,6 +421,7 @@ Nasz program na ten moment wykorzystać możemy tylko na naszym komputerze. Żeb
 Pluginy w sbt dodaje się poleceniem `addSbtPlugin` w pliku `projects/plugins.sbt`. Zacznijmy zatem od utworzenia tego pliku.
 
 Następnie dodajmy do niego linijkę:
+
 ```txt
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.4")
 ```
