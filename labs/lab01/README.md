@@ -145,7 +145,7 @@ package com.prz.hello
 
 Punktem startowym dla programów w scali jest metoda oznaczona `@main`. `:Unit` oznacza iż metoda ta nie zwraca, żadnych obiektów. 
 
-Program uruchamia się klikając zielony trójkąt obok `@main`. 
+Program uruchamia się klikając w zielony trójkąt obok `@main`. 
 
 ### Czym są metody
 
@@ -175,7 +175,7 @@ def printHello(hello: String = "Hello World"): Unit =
   printHello()
 ```
 
-Wcięty kod po znaku `=` traktuje się jako blok kodu tej funkcji. Jej równoważny zapis to:
+Wcięty kod po znaku `=` traktuje się jako blok kodu tej funkcji. Jego równoważny zapis to:
 
 ```scala
 def printHello(hello: String = "Hello World"): Unit = {
@@ -238,7 +238,7 @@ do nowego pola możemy się odwołać:
 person.age
 ```
 
-A jak porównywać instancje klas? Otóż, instancje klas porównywane są przez referencję tj. klasy są takie same, jeżeli wskazują na to samo miejsce w pamięci??
+A jak porównywać instancje klas? Otóż, instancje klas porównywane są przez referencję tj. klasy są takie same, jeżeli wskazują na to samo miejsce w pamięci.
 
 Jeżeli chcemy mieć obiekty, które możemy porównywać scala daje nam dostęp do `case class`, które porównywane są poprzez wartości.
 
