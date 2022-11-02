@@ -1,5 +1,4 @@
 #+title: Teoria Kategorii
-#+subtitle: Jak połączyć modele z CI/CD?
 #+startup: beamer
 #+beamer_theme: Luebeck
 #+beamer_color_theme: structure
