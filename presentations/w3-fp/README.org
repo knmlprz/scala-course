@@ -1,0 +1,43 @@
+#+title: Programowanie funkcyjne
+#+startup: beamer
+#+beamer_theme: Luebeck
+#+beamer_color_theme: structure
+#+beamer_font_theme: professionalfonts
+#+latex_class: beamer
+#+latex_class_options: [presentation]
+#+author: Patryk Gronkiewicz
+#+language: pl
+#+date: 2022-11-22
+#+options: toc:nil tags:nil todo:nil
+#+latex_header_extra: \institute[KNML]{KN Machine Learning}
+#+latex_header_extra: \setbeamercovered{transparent}
+#+latex_header_extra: \newtheorem{uw}{Uwaga}[section]
+#+latex_header_extra: \newtheorem{prz}{Przykład}[section]
+#+latex_header_extra: \newtheorem{deff}{Definicja}[section]
+
+* Co to jest to całe FP?
+#+begin_deff
+Programowanie funkcyjne jest *paradygmatem programowania*, gdzie programy są tworzone przez stosowanie i składanie funkcji.
+Jest *deklaratywnym paradygmatem programowania* w którym definicje funkcji są drzewem wyrażeń, które mapuje wartości na inne wartości --- w przeciwieństwie do sekwencji *imperatywnych* wyrażeń *aktualizujących stan* programu[fn:wikidef]
+#+end_deff
+#+beamer: \pause
+Pojawia się tu dużo ciężkich określeń, jednak zacznijmy od początku.
+
+[fn:wikidef]https://en.wikipedia.org/wiki/Functional_programming (tłum. własne)
+* Paradygmat
+** Opis :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.65
+:END:
+Jest to ,,styl'' pisania kodu, czasem wymuszony przez język programowania.
+Angielska Wikipedia wyróżnia ich 74 (/sic!/).
+Nas w tym momencie interesują dwa (i pół): funkcyjny i imperatywny (oraz pochodna tego drugiego --- obiektowy).
+
+Definicję paradygmatu funkcyjnego już widzieliśmy, natomiast bez takich formalności --- paradygmat imperatywny to ,,typowe'' pisanie kodu znane z Pythona, C++ czy Javy.
+** Screenshot :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.25
+:END:
+#+attr_latex: :width 0.45\textwidth
+[[./img/paradigms.png]]
+* Czyste funkcje (/pure functions/)
