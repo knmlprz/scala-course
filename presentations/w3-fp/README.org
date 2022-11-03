@@ -41,3 +41,21 @@ Definicję paradygmatu funkcyjnego już widzieliśmy, natomiast bez takich forma
 #+attr_latex: :width 0.45\textwidth
 [[./img/paradigms.png]]
 * Czyste funkcje (/pure functions/)
+Czyste funkcje to takie, które:
+1. Dla *dokładnie takich samych* argumentów zwracają *dokładnie takie same* wartości;
+2. Nie mają *skutków ubocznych*.
+
+W Scali wszystkie funkcje, które interfejsują się z czymkolwiek poza innymi funkcjami *nie* są czyste --- np. ~println~ ma skutek uboczny (wypisanie na konsoli).
+
+# * Czyste funkcje (/pure functions/) c. d.
+#+begin_src scala :eval no
+// pure function
+val pureDouble = (x: Int) => x * 2
+// impure function
+val impureDouble = (x: Int) => {
+  val newX = x * 2
+  println(newX)
+  newX
+}
+fn(4); gn(4)
+#+end_src
