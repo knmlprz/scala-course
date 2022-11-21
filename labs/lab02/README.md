@@ -151,6 +151,16 @@ w trakcie jego czytania i próby jego użycia :) )
 ```scala
 import scala.util.matching.Regex
 
+/** Extracts data about Gdansk's districts' population and number
+ * of crimes
+ *
+ * Method downloads CSV files from https://ckan.multimediagdansk.pl,
+ * saves CSV files, performs fundamental data cleaning
+ * and returns data as list of tuples.
+ *
+ * @return list of data entries: (population, number-of-crimes)
+ *         for each district
+ */
 def gdanskCrimesInDistrictsExtract(): List[(Int, Int)] =
   val urlStringPopulace = "https://ckan.multimediagdansk.pl/dataset/a0564507-fd56-4eb9-8444-1d4d70b1d5c0/resource/50c1cfc2-1608-4ba7-9f44-ffcd7f878e33/download/ludnosc-gdanska-wg-jednostek-pomocniczych.csv"
   downloadFile(
