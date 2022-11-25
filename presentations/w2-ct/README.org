@@ -7,7 +7,7 @@
 #+latex_class_options: [presentation]
 #+author: Patryk Gronkiewicz
 #+language: pl
-#+date: 2022-11-08
+#+date: 2022-11-15
 #+options: toc:nil tags:nil todo:nil
 #+latex_header_extra: \institute[KNML]{KN Machine Learning}
 #+latex_header_extra: \setbeamercovered{transparent}
@@ -102,6 +102,8 @@ Funktory to morfizmy między kategoriami.
 
 Funktor każdemu obiektowi z kategorii $C$ przypisuje obiekt z kategorii $D$ i tak samo dla morfizmów --- każdy ma swój odpowiednik.
 Istnieją dwa typy funktorów --- kowariantne (niezmieniające zwrotu mapowania) i kontrawariantne (zmieniające zwrot mapowania)
+* Transformacja naturalna
+Kto powiedział, że funktory nie mogą być kategorią? Takie przekształcenie jednego funktora w drugi nazywamy transformacją naturalną (ang. /natural transformation/).
 * Dodatkowe materiały
 + https://github.com/BartoszMilewski/Publications/blob/master/TheDaoOfFP/DaoFP.pdf (ciągle aktualizowane)
 + https://www.youtube.com/user/DrBartosz (Wykłady po angielsku nt. teorii kategorii, programowania funkcyjnego itp.)
