@@ -160,6 +160,14 @@ _i_ równa jest liczbie procesów, które _dotarły_ do pozycji _i_
 raz na pozycji o numerze większym bądź równym _i_.) Wyniki
 prezentujemy za pomocą funkcji `println`.
 
+Żeby zobaczyć działanie naszej metody, musimy ją wywołać w metodzie
+głównej:
+
+```scala
+@main def main(): Unit =
+  randomWalkSimulations(30, 100)
+```
+
 ## Zadanie 2.
 ## Model regresji liniowej dla liczby przestępstw w Gdańsku
 
@@ -206,10 +214,8 @@ będzie ściągać odpowiednie dane, przetwarzać je i zwracać
 listę krotek (`Tuple`), gdzie każda tupla będzie odpowiadać
 którejś dzielnicy i będzie postaci (_populacja-dzielnicy_, _liczba-przestępstw-w-dzielnicy_).
 
-(Pamiętamy o pisaniu oprócz kodu także i dokumentacji kodu -
-podczas pisania programu składającego się z wielu funkcji i metod
-to bardzo ważne, ponieważ umożliwia łatwe odnalezienie się w kodzie
-w trakcie jego czytania i próby jego użycia :) )
+Pod kodem zamieszczone jest dokładne wyjaśnienie krok po kroku
+jej działania.
 
 ```scala
 import scala.util.matching.Regex
@@ -263,12 +269,175 @@ def gdanskCrimesInDistrictsExtract(): List[(Int, Int)] =
   districtsCrime
 ```
 
-W powyższej metodzie najpierw pobieramy dane i zapisujemy je do plików.
-Następnie zczytujemy dane z plików linijka po linijce, dokonując niezbędnych
-oczyszczeń (drobne nieścisłości w nazwach dzielnic w obu plikach,
-cudzysłowie wokół liczb zdarzające się w jednym z plików). Rozwiązać musimy
-też inny problem - dzielnice w obu plikach są umieszczone w różnej kolejności;
-do dopasowania linijek odnoszących się do poszczególnych dzielnic
-używamy struktury danych `Map`.
+Tajemnicze linijki pomiędzy `/**` i `*/` narazie pomińmy - nie
+mają one znaczenia dla działania metody, ale pełnią inną funkcję,
+którą wyjaśnimy później. Metoda `gdanskCrimesInDistrictsExtract`
+nie przyjmuje żadnych argumentów, a zwracać ma obiekt typu
+`List`, który zawierać będzie nasze dane.
+
+Na początku definiujemy zmienne przechowujące adresy URL plików
+z danymi. Pobieramy i zapisujemy pliki z pomocą metody `downloadFile`.
+Następnie tworzymy obiekty `fromFile`: `filePopulace` oraz `fileCrime`,
+które będą zczytywać i przechowywać  kolejne linijki naszych plików.
+
+Jeśli otworzylibyśmy oba pliki i je porównali, dostrzeglibyśmy
+problem - niektóre dzielnice mają niespójne nazwy w jednym i drugim
+pliku. Funkcja `cleanPopulDistrict` służy do dostosowania nazw z pliku
+z liczbą ludności - przyjmuje ona nazwę dzielnicy (ciąg znaków `district`)
+i dokonuje drobnego przetworzenia niektórych danych.
+
+Inny problem pojawia się w pliku z liczbą przestępstw - mamy tam przykład
+linijki (wiersz 104), gdzie liczba zapisana jest w cudzysłowiu i z przecinkiem
+po cyfrze tysięcy. Jeśli każemy Scali zinterpretować to jako liczbę, otrzymamy
+błąd - musimy więc przetworzyć dane. Wykorzystamy do tego wyrażenie regularne -
+zapisane w zmiennej `quotesNumberRegex`.
+
+Przyszła pora, by wyciągnąć dane z plików. Najpierw dane dot. liczby mieszkańców
+poszczególnych dzielnic. Tworzymy zmienną `districtPopulations`, do której
+zapiszemy wynik następującego działania:
+
+- używamy metody `getLines` obiektu `filePopulace` -> dostajemy ciąg linijek 
+z pliku csv
+- wartości są w pliku oddzielone średnikami `;` - za pomocą metody `map`
+przekształcamy ciąg linijek w ciąg elementów, gdzie każdy element
+jest ciągiem wartości z jednej linijki
+- nie wszystkie linijki zawierają dane (np. linijka tytułowa); zauważamy
+jednak, że wszystkie linijki z danymi mają na początku liczbę;
+wykorzystujemy ten fakt, używając metody `filter`, która pozostawi tylko
+te elementy (ciągi danych z linijek), gdzie każdy element będzie cyfrą
+- chcemy dane tylko z 2017 roku, więc z pomocą metody `filter` je odfiltrowujemy
+(podana metodzie funkcja zwróci fałsz, jeśli rok będzie różny od 2017)
+- w końcu za pomocą metody `foldLeft` tworzymy obiekt typu `Map`;
+obiekt typu `Map` przechowuje dane w postaci "klucz -> wartość"
+u nas kluczami będą nazwy dzielnic, a wartościami liczby ich mieszkańców;
+w ten sposób, gdy mamy taki obiekt i nazwę jakiejś dzielnicy, możemy łatwo
+dostać się do liczby jej mieszkańców.
+
+Następnie pobierzemy dane dot. ilości przestępstw i od razu zapiszemy
+je do listy, gdzie każdy element będzie zawierał liczbę mieszkańców 
+danej dzielnicy i liczbę przestępstw popełnionych w obrębie tej dzielnicy.
+Każdy element będzie obiektem typu `Tuple2`, czy _krotką_ zawierającą
+2 elementy. W Scali _krotki_ (_Tuple_) są typem danych podobnym do list,
+z tym że mogą przechowywać elementy różnych typów. Zatem dokonujemy
+na linijkach kolejnych operacji:
+
+- oczyszczamy liczby z cudzysłowiów i przecinków z pomocą
+wyrażenia regularnego
+- wyrzucamy niepotrzebne liniji, w podobny sposób jak poprzednio
+- każdą linijkę (będącą ciągiem znaków) rozdzielamy na wartości
+  (w tym pliku są one rozdzielone przecinkiem)
+- dodajemy do listy dane w ten sposób, że z każdej linijki wrzucamy
+liczbę przestępstw i liczbę mieszkańców z danej dzielnicy, używając 
+wcześniej utworzonej mapy.
+
+Uzyskaną listę par wartości zwracamy (słówko _return_ jest opcjonalne;
+jeśli napiszemy coś "wolno stojącego" na końcu metody, to wtedy
+to coś zostanie przez metodę zwrócone.)
+
+**Dokumentacja**. Pora wyjaśnić, cóż to za dziwne linijki nad linijką,
+gdzie mamy słówko `def`. Zauważmy, że ogólnie oznaczenie `/* ... */`
+oznacza wielolinijkowy komentarz - są to informacje dla czytającego kod,
+ignorowane przez kompilator. Ten komentarz jednak ma w sobie coś niezwykłego.
+To _dokumentacja_ naszej metody. Opisuje ona, co robi ta metoda,
+jakie argumenty przyjmuje (w tym przypadku żadne) i co zwraca.
+Nie ma ona żadnego wpływu na działanie programu, ale w większych projektach
+jej pisanie jest kluczowe - pozwala osobie czytającej kod bądź
+próbującej go użyć szybko odnaleźć się w kodzie.
+
 
 Mamy już listę datapointów, teraz pora na implementację regresji liniowej.
+Chcemy dopasować do danych - listy par liczb (x, y), gdzie x to populacja
+dzielnicy, a y to liczba przestępstw, prostą najlepiej opisującą zależność
+między nimi y = ax + b. Współczynniki a, b znajdujemy z pomocą metody
+najmniejszych kwadratów i faktu, że ekstremum (tu minimum) funkcji
+jest w punkcie, gdzie pochodne cząstkowe się zerują:
+
+![metoda_najmniejszych_kwadratów](img/partial_derivatives.JPG)
+
+Mamy układ dwóch równań, szukamy współczynników a i b. Możemy
+je znaleźć np. metodą wyznaczników:
+
+![metoda_wyznaczników](img/determinants.JPG)
+
+Utwórzmy sobie klasę reprezentującą nasz model, by parametry modelu
+regresji (współczynniki a i b) mogły być przechowywane w jednym obiekcie
+(oczywiście pamiętamy o dokumentacji):
+
+```scala
+/**
+ * Class representing immutable model of fitted linear regression
+ * Y = a*X + b
+ */
+case class UnivariateLinearRegressionModel(a: Double, b: Double)
+```
+
+Napiszmy teraz metodę, która będzie przyjmować dwie listy wartości:
+X i Y, i będzie na ich podstawie zwracać obiekt modelu ze współczynnikami
+dopasowanymi do tych danych:
+
+```scala
+/** Returns fitted model of univariate linear regression
+ * Y = x * X + b
+ *
+ * @param X: list of values of the predictor
+ * @param Y: list of values of the predicted variable corresponding
+ *           to values in X
+ * @return fitted model of univariate linear regression
+ */
+def fitUnivariateLinearRegression(X: List[Double], Y: List[Double]): UnivariateLinearRegressionModel =
+  val det2x2 = (A: Double, B: Double, C: Double, D: Double) => {
+    // determinant of matrix:
+    // [ A  B ]
+    // [ C  D ]
+    A * D - B * C
+  }
+  val n = X.length
+  val sumXi = X.sum
+  val sumYi = Y.sum
+  val sumXiSquared = X.map(pow(_, 2.0)).sum
+  val sumXiYi = List.range(0, n)
+    .map((i: Int) => X(i) * Y(i))
+    .sum
+  val W = det2x2(sumXiSquared, sumXi, sumXi, n.toDouble)
+  val Wa = det2x2(sumXiYi, sumXi, sumYi, n)
+  val Wb = det2x2(sumXiSquared, sumXiYi, sumXi, sumYi)
+  UnivariateLinearRegressionModel(Wa / W, Wb / W)
+```
+
+Mamy metodę zwracającą dopasowany model, teraz jeszcze metoda, która
+na podstawie podanej wartości x i modelu poda przewidywaną wartość y:
+
+```scala
+/** For given fitted linear regression model and predictor value x,
+ * computes the value predicted by this model for this value x
+ */
+def predictValueWithULR(model: UnivariateLinearRegressionModel, x: Double): Double =
+  model.a * x + model.b
+```
+
+Mamy już wszystkie potrzebne narzędzia; napiszmy więc końcową metodę,
+która ich użyje i wypisze nam jakieś wyniki:
+
+```scala
+/** Performs fitting linear regression model to population of Gdansk's districts
+ * and number of crimes in each of them.
+ *
+ * Downloads CSV files from https://ckan.multimediagdansk.pl
+ */
+def regressionForCrimesInGdansk(): Unit =
+  val crimesData = gdanskCrimesInDistrictsExtract()
+  val populaces = crimesData.map(_ (0).toDouble)
+  val crimes = crimesData.map(_ (1).toDouble)
+  val model = fitUnivariateLinearRegression(populaces, crimes)
+  crimesData
+    .map((popul: Int, crimes: Int) => (popul, crimes, predictValueWithULR(model, popul)))
+    .foreach(println)
+```
+
+Żeby zobaczyć działanie naszej metody, musimy ją wywołać w metodzie
+głównej:
+
+```scala
+@main def main(): Unit =
+  regressionForCrimesInGdansk()
+```
