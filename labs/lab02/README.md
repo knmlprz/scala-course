@@ -11,8 +11,9 @@ jest zainstalowany IntelliJ Community.
 ---
 
 1. Wstęp. Przygotowanie.
-2. Zadanie pierwsze.
-3. Zadanie drugie.
+2. Rozgrzewka
+3. Zadanie pierwsze.
+4. Zadanie drugie.
 
 ## Wstęp. Przygotowanie.
 
@@ -34,6 +35,68 @@ package com.prz.functionsandmethods
 ```
 
 Uruchom kod i sprawdź, czy działa.
+
+
+## Rozgrzewka
+
+W języku Scala możemy tworzyć _funkcje_ i _metody_ - są to bardzo
+podobne twory, jednak nie tożsame.
+
+**Metoda** to kawałek kodu, który przetwarza dane. Ten kawałek
+kodu może przyjmować argumenty. Może też zwracać wynik.
+Metody definiujemy słowem kluczowym `def`.
+
+Poniżej utworzymy przykładową metodę, która przyjmuje jako argumenty
+dwie liczby całkowite `a` i `b` i zwraca liczbę całkowitą - wynik
+działania `(a + 1) * b`:
+
+```scala
+def someMethod(a: Int, b: Int): Int =
+  return (a + 1) * b
+```
+
+Gdy napiszemy taką metodę, możemy ją _wywołać_, np. `someMethod(1, 2)`.
+Cały kod mógłby wyglądać tak:
+
+```scala
+package com.prz.functionsandmethods
+
+def someMethod(a: Int, b: Int): Int =
+  return (a + 1) * b
+
+@main def main(): Unit = println(someMethod(1, 2))
+```
+
+Metodę możemy opisać jako _definicję zachowania jakiegoś obiektu_.
+Metody mogą być częściami klas i definiować zachowania ich
+obiektów (np. metoda _map_ klasy _List_). W Scali 3 (czyli wersji,
+której tu używamy) można też  definiować metody, które nie są
+częścią żadnej klasy czy obiektu, są "na zewnątrz" - to tzw.
+_top-level definitions_.
+
+Z kolei **funkcja** jest _obiektem_ - zachowuje się podobnie
+jak np. liczba, ciąg znaków czy obiekt klasy _Person_ z poprzedniego
+laboratorium - z tą różnicą, że możemy ją _wywołać_. Funkcję możemy
+więc np. przechowywać w zmiennej, tworzyć
+listy obiektów typu funkcja czy przekazać jako argument to metody.
+Przykład:
+
+```scala
+val someFunction = (a: Int, b: Int) => (a+1)*b
+```
+
+Co robi funkcja _someFunction_? Dokładnie to samo co metoda _someMethod_
+z tym, że _someFunction_ to funkcja, a _someMethod_ to metoda.
+Nasz przykładowy kod mógłby wyglądać tak:
+
+```scala
+package com.prz.functionsandmethods
+
+@main def main(): Unit =
+  val someFunction = (a: Int, b: Int) => (a+1)*b
+  println(someFunction(1, 2))
+```
+
 
 ## Zadanie 1.
 ## Zmiany klimatu, czyli rachunek prawdopodobieństwa w praktyce
