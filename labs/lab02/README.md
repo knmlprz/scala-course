@@ -20,8 +20,7 @@ jest zainstalowany IntelliJ Community.
 ---
 
 Utwórz nowy projekt w IntelliJ, tak jak na poprzednich zajęciach.
-Wybierz wersję `Scala 3.2.0` lub `Scala 3.2.1`. Zaznacz `Download
-sources` dla sbt i Scali.
+Wybierz wersję `Scala 3.2.0` lub `Scala 3.2.1`. Zaznacz `Download sources` dla sbt i Scali.
 
 W katalogu `scr/main/scala` utwórz katalogi: `com/prz/functionsandmethods`
 i w ostatnim katalogu utwórz plik `FunctionsAndMethods.scala`.
@@ -35,7 +34,6 @@ package com.prz.functionsandmethods
 ```
 
 Uruchom kod i sprawdź, czy działa.
-
 
 ## Rozgrzewka
 
@@ -70,7 +68,7 @@ def someMethod(a: Int, b: Int): Int =
 Metodę możemy opisać jako _definicję zachowania jakiegoś obiektu_.
 Metody mogą być częściami klas i definiować zachowania ich
 obiektów (np. metoda _map_ klasy _List_). W Scali 3 (czyli wersji,
-której tu używamy) można też  definiować metody, które nie są
+której tu używamy) można też definiować metody, które nie są
 częścią żadnej klasy czy obiektu, są "na zewnątrz" - to tzw.
 _top-level definitions_.
 
@@ -97,8 +95,8 @@ package com.prz.functionsandmethods
   println(someFunction(1, 2))
 ```
 
-
 ## Zadanie 1.
+
 ## Zmiany klimatu, czyli rachunek prawdopodobieństwa w praktyce
 
 ---
@@ -169,6 +167,7 @@ głównej:
 ```
 
 ## Zadanie 2.
+
 ## Model regresji liniowej dla liczby przestępstw w Gdańsku
 
 Zbudujemy model regresji liniowej, który opisywał będzie liczbę
@@ -181,10 +180,10 @@ udostępniane przez urząd miejski w Gdańsku oraz pozostałe podmioty
 interesować nas będą zbiory:
 
 - Liczba przestępstw w podziale na dzielnice w Gdańsku
-[https://ckan.multimediagdansk.pl/dataset/6f667d3b-4bb2-45f3-a377-f3c856b465e0/resource/7eeb36e0-e967-442e-92b1-5a05d892f29f](https://ckan.multimediagdansk.pl/dataset/6f667d3b-4bb2-45f3-a377-f3c856b465e0/resource/7eeb36e0-e967-442e-92b1-5a05d892f29f)
+  [https://ckan.multimediagdansk.pl/dataset/6f667d3b-4bb2-45f3-a377-f3c856b465e0/resource/7eeb36e0-e967-442e-92b1-5a05d892f29f](https://ckan.multimediagdansk.pl/dataset/6f667d3b-4bb2-45f3-a377-f3c856b465e0/resource/7eeb36e0-e967-442e-92b1-5a05d892f29f)
 
 - Ludność Gdańska według jednostek pomocniczych
-[https://ckan.multimediagdansk.pl/dataset/a0564507-fd56-4eb9-8444-1d4d70b1d5c0/resource/50c1cfc2-1608-4ba7-9f44-ffcd7f878e33](https://ckan.multimediagdansk.pl/dataset/a0564507-fd56-4eb9-8444-1d4d70b1d5c0/resource/50c1cfc2-1608-4ba7-9f44-ffcd7f878e33)
+  [https://ckan.multimediagdansk.pl/dataset/a0564507-fd56-4eb9-8444-1d4d70b1d5c0/resource/50c1cfc2-1608-4ba7-9f44-ffcd7f878e33](https://ckan.multimediagdansk.pl/dataset/a0564507-fd56-4eb9-8444-1d4d70b1d5c0/resource/50c1cfc2-1608-4ba7-9f44-ffcd7f878e33)
 
 Najpierw wykorzystamy metodę z poprzednich zajęć, służącą do pobrania
 i zapisania pliku.
@@ -278,7 +277,7 @@ nie przyjmuje żadnych argumentów, a zwracać ma obiekt typu
 Na początku definiujemy zmienne przechowujące adresy URL plików
 z danymi. Pobieramy i zapisujemy pliki z pomocą metody `downloadFile`.
 Następnie tworzymy obiekty `fromFile`: `filePopulace` oraz `fileCrime`,
-które będą zczytywać i przechowywać  kolejne linijki naszych plików.
+które będą zczytywać i przechowywać kolejne linijki naszych plików.
 
 Jeśli otworzylibyśmy oba pliki i je porównali, dostrzeglibyśmy
 problem - niektóre dzielnice mają niespójne nazwy w jednym i drugim
@@ -296,25 +295,25 @@ Przyszła pora, by wyciągnąć dane z plików. Najpierw dane dot. liczby mieszk
 poszczególnych dzielnic. Tworzymy zmienną `districtPopulations`, do której
 zapiszemy wynik następującego działania:
 
-- używamy metody `getLines` obiektu `filePopulace` -> dostajemy ciąg linijek 
-z pliku csv
+- używamy metody `getLines` obiektu `filePopulace` -> dostajemy ciąg linijek
+  z pliku csv
 - wartości są w pliku oddzielone średnikami `;` - za pomocą metody `map`
-przekształcamy ciąg linijek w ciąg elementów, gdzie każdy element
-jest ciągiem wartości z jednej linijki
+  przekształcamy ciąg linijek w ciąg elementów, gdzie każdy element
+  jest ciągiem wartości z jednej linijki
 - nie wszystkie linijki zawierają dane (np. linijka tytułowa); zauważamy
-jednak, że wszystkie linijki z danymi mają na początku liczbę;
-wykorzystujemy ten fakt, używając metody `filter`, która pozostawi tylko
-te elementy (ciągi danych z linijek), gdzie każdy element będzie cyfrą
+  jednak, że wszystkie linijki z danymi mają na początku liczbę;
+  wykorzystujemy ten fakt, używając metody `filter`, która pozostawi tylko
+  te elementy (ciągi danych z linijek), gdzie każdy element będzie cyfrą
 - chcemy dane tylko z 2017 roku, więc z pomocą metody `filter` je odfiltrowujemy
-(podana metodzie funkcja zwróci fałsz, jeśli rok będzie różny od 2017)
+  (podana metodzie funkcja zwróci fałsz, jeśli rok będzie różny od 2017)
 - w końcu za pomocą metody `foldLeft` tworzymy obiekt typu `Map`;
-obiekt typu `Map` przechowuje dane w postaci "klucz -> wartość"
-u nas kluczami będą nazwy dzielnic, a wartościami liczby ich mieszkańców;
-w ten sposób, gdy mamy taki obiekt i nazwę jakiejś dzielnicy, możemy łatwo
-dostać się do liczby jej mieszkańców.
+  obiekt typu `Map` przechowuje dane w postaci "klucz -> wartość"
+  u nas kluczami będą nazwy dzielnic, a wartościami liczby ich mieszkańców;
+  w ten sposób, gdy mamy taki obiekt i nazwę jakiejś dzielnicy, możemy łatwo
+  dostać się do liczby jej mieszkańców.
 
 Następnie pobierzemy dane dot. ilości przestępstw i od razu zapiszemy
-je do listy, gdzie każdy element będzie zawierał liczbę mieszkańców 
+je do listy, gdzie każdy element będzie zawierał liczbę mieszkańców
 danej dzielnicy i liczbę przestępstw popełnionych w obrębie tej dzielnicy.
 Każdy element będzie obiektem typu `Tuple2`, czy _krotką_ zawierającą
 2 elementy. W Scali _krotki_ (_Tuple_) są typem danych podobnym do list,
@@ -322,13 +321,13 @@ z tym że mogą przechowywać elementy różnych typów. Zatem dokonujemy
 na linijkach kolejnych operacji:
 
 - oczyszczamy liczby z cudzysłowiów i przecinków z pomocą
-wyrażenia regularnego
+  wyrażenia regularnego
 - wyrzucamy niepotrzebne liniji, w podobny sposób jak poprzednio
 - każdą linijkę (będącą ciągiem znaków) rozdzielamy na wartości
   (w tym pliku są one rozdzielone przecinkiem)
 - dodajemy do listy dane w ten sposób, że z każdej linijki wrzucamy
-liczbę przestępstw i liczbę mieszkańców z danej dzielnicy, używając 
-wcześniej utworzonej mapy.
+  liczbę przestępstw i liczbę mieszkańców z danej dzielnicy, używając
+  wcześniej utworzonej mapy.
 
 Uzyskaną listę par wartości zwracamy (słówko _return_ jest opcjonalne;
 jeśli napiszemy coś "wolno stojącego" na końcu metody, to wtedy
@@ -343,7 +342,6 @@ jakie argumenty przyjmuje (w tym przypadku żadne) i co zwraca.
 Nie ma ona żadnego wpływu na działanie programu, ale w większych projektach
 jej pisanie jest kluczowe - pozwala osobie czytającej kod bądź
 próbującej go użyć szybko odnaleźć się w kodzie.
-
 
 Mamy już listę datapointów, teraz pora na implementację regresji liniowej.
 Chcemy dopasować do danych - listy par liczb (x, y), gdzie x to populacja
