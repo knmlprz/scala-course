@@ -30,7 +30,7 @@ println("Map: ", data.map((x: Int) => x * x))
 
 ### Reduce
 
-Nazwa sugeruje, że coś redukujemy. I tak faktycznie jest. Operacja ta polega, na tym iż konsekwentnie uruchamiamy funkcję, która przyjmuje dwa argumenty i zwraca jeden (typy wejściowe i wyjściowe są takie same). Co w  sprawia, iż po wielu iteracjach pozostaje nam jeden element. 
+Nazwa sugeruje, że coś redukujemy. I tak faktycznie jest. Operacja ta polega, na tym iż konsekwentnie uruchamiamy funkcję, która przyjmuje dwa argumenty i zwraca jeden (typy wejściowe i wyjściowe są takie same). Co w sprawia, iż po wielu iteracjach pozostaje nam jeden element.
 
 ![Reduce](img/ScalaCourse-Reduce.drawio.png)
 
@@ -54,7 +54,7 @@ println("Filter: ", data.filter(_ > 2))
 
 ### GroupBy
 
-Łączy elementy w grupy, na podstawie klucza, który jest wartością zwracaną przez funkcję wejściową. 
+Łączy elementy w grupy, na podstawie klucza, który jest wartością zwracaną przez funkcję wejściową.
 
 Na przykład, mamy funkcję, która zwraca czy liczba jest parzysta lub nieparzysta. Jeżeli użyjemy jej wraz z GroupBy na liście elementów, to otrzymamy mapę, zawierającą dwa klucze: parzysta i nieparzysta, a pod tymi kluczami znajdować się będą listy elementów, które do niej pasują.
 
