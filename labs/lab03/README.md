@@ -1,5 +1,9 @@
 # Laboratorium 3 – Praktyczny wstęp do Apache Spark
 
+Zacznijmy od utworzenia nowego projektu. **BARDZO WAŻNE** jest abyście zrobili to **dokładnie tak jak pokazałem to na zdjęciu** (poza ścieżkami do plików). 
+
+![Instrukcja](img/project-init.png)
+
 ## Operacje na danych w Scali
 
 Zanim zaczniemy opowiadać czym jest spark i do czego można go wykorzystać, musimy nauczyć się jakie operacje na danych dostępne są w samej Scali. Gdyż, analogiczne operacje będziemy później przeprowadzać w Sparku.
@@ -81,3 +85,7 @@ Kod w scali:
 ```scala
 println("Flatten: ", grouped.values.flatten)
 ```
+
+## Co to Spark i jak go postawić
+
+[Spark standalone](https://spark.apache.org/docs/latest/spark-standalone.html)
