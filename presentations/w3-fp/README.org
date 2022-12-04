@@ -7,7 +7,7 @@
 #+latex_class_options: [presentation]
 #+author: Patryk Gronkiewicz
 #+language: pl
-#+date: 2022-11-22
+#+date: 2022-12-06
 #+options: toc:nil tags:nil todo:nil
 #+latex_header_extra: \institute[KNML]{KN Machine Learning}
 #+latex_header_extra: \setbeamercovered{transparent}
@@ -45,7 +45,7 @@ Czyste funkcje to takie, które:
 1. Dla *dokładnie takich samych* argumentów zwracają *dokładnie takie same* wartości;
 2. Nie mają *skutków ubocznych*.
 
-W Scali wszystkie funkcje, które interfejsują się z czymkolwiek poza innymi funkcjami *nie* są czyste --- np. ~println~ ma skutek uboczny (wypisanie na konsoli).
+W Scali wszystkie funkcje, które interfejsują się z czymkolwiek poza innymi funkcjami *nie* są czyste --- np. src_scala[:exports code]{println} ma skutek uboczny (wypisanie na konsoli).
 
 # * Czyste funkcje (/pure functions/) c. d.
 #+begin_src scala :eval no
@@ -59,3 +59,57 @@ val impureDouble = (x: Int) => {
 }
 fn(4); gn(4)
 #+end_src
+* Pętle
+#+attr_latex: :width 0.6\textwidth
+[[./img/neat_loops.jpg]]
+* Rekurencja
+** Żeby zrozumieć rekurencję
+ Musisz zrozumieć rekurencję
+*** Żeby zrozumieć rekurencję
+Musisz zrozumieć rekurencję
+**** Żeby zrozumieć rekurencję
+Musisz zrozumieć rekurencję
+* Rekurencja
+#+attr_latex: :width 0.8\textwidth
+[[./img/infinite_recursion.jpg]]
+* Rekurencja ogonowa (/tail recursion/)
+Pozwala ona na zastosowanie optymalizacji  --- kompilator zamiast zagnieżdżać kolejne wywołania ,,spłaszcza'' tę strukturę i pozbywa się rekurencji.
+** Zwykła rekurencja
+#+begin_src scala
+def factorial_regular(n: Int): Int =
+    if n == 0 then 1
+    else n * factorial_regular(n - 1)
+#+end_src
+** Rekurencja ogonowa
+#+begin_src scala
+@tailrec
+def factorial_tr(n: Int, acc: Int = 1): Int =
+    if n == 0 then acc
+    else factorial_tr(n - 1, acc * n)
+#+end_src
+* Rekurencja ogonowa (/tail recursion/)
+#+attr_latex: :width 0.6\textwidth
+[[./img/pooh.png]]
+* Funkcje anonimowe (tzw. lambdy)
+Funkcje, które żyją tak krótko, że nie nadajemy nawet im nazwy --- są to tzw. lambdy.
+W scali mają składnię src_scala[:exports code]{(arg1, arg2, ...) => res}.
+Jeśli jest tylko jeden argument --- nawias można pominąć.
+Czasem występuje jeszcze prostszy zapis z podkreśleniami (Funkcje niżej są jednoznaczne).
+#+begin_src scala
+(arg1: Int, arg2: Int) = arg1 * arg2
+_ * _
+#+end_src
+Warto zauważyć, że w drugim przypadku w obu sytuacjach argumentem jest podkreślenie --- po każdym jej wystąpieniu brany jest następny argument.
+* Funkcje wyższego rzędu (/Higher Order Functions/, /HOF/)
+Funkcje przyjmujące inne funkcje jako argumenty.
+#+begin_src scala
+val greater_than_1: Int => Boolean = (x: Int) => x > 1
+val double: Int => Int = (x: Int) => x * 2
+val sum: (Int, Int) => Int = (x: Int, y: Int) => x+y
+List(1,2,3).filter(_>1).map(_*2).reduce(_+_)
+List(1,2,3).filter(greater_than_1).map(double).reduce(sum)
+#+end_src
+* Teoria teorią, ale do czego to się przydaje?
++ W data science! Cały Spark opiera się przede wszystkim na HOF. To samo Pandas/Pola.rs/inne biblioteki do ramek danych. No i cały język R.
++ W strumieniowym przetwarzaniu danych.
++ Przy odtwarzaniu rzeczy --- dużo łatwiej doprowadzić program do tego samego stanu mając ściśle zdefiniowane transformacje.
