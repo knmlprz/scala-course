@@ -171,14 +171,10 @@ object WordCountDemo {
 ## Spark i obliczanie PI metodą Monte Carlo
 
 Jak obliczyć PI? Jeżeli pamiętacie wzór na pole koła, to wygląda on  tak:
-$$
-P = \pi r^2
-$$
+$$P = \pi r^2$$
 Wokół tego pola narysować możemy kwadrat, którego boki są stycznymi okręgu.
 Pole tego kwadratu wynosić będzie:
-$$
-P = (2r)^2 = 4r^2
-$$
+$$P = (2r)^2 = 4r^2$$
 
 Teraz ich stosunek wynosi:
 
@@ -189,9 +185,7 @@ i zawiera w sobie liczbę $\pi$! Możemy to wykorzystać. Będziemy losować pun
 ![](img/pi-2.png)
 
 Tak oto dostajemy wzór:
-$$
-\pi = 4 \frac{P_\circ}{P_\square} \approx 4 \frac{\#czerwone}{\#wszystkie}
-$$
+$$\pi = 4 \frac{P_\circ}{P_\square} \approx 4 \frac{\#czerwone}{\#wszystkie$$
 
 ```scala
 import org.apache.spark.sql.SparkSession
