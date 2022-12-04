@@ -1,6 +1,6 @@
 # Laboratorium 3 – Praktyczny wstęp do Apache Spark
 
-Zacznijmy od utworzenia nowego projektu. **BARDZO WAŻNE** jest abyście zrobili to **dokładnie tak jak pokazałem to na zdjęciu** (poza ścieżkami do plików). 
+Zacznijmy od utworzenia nowego projektu. **BARDZO WAŻNE** jest abyście zrobili to **dokładnie tak jak pokazałem to na zdjęciu** (poza ścieżkami do plików).
 
 ![Instrukcja](img/project-init.png)
 
@@ -113,6 +113,7 @@ Uruchamianie aplikacji zaczyna się od `SparkContext`, łączy się on z `Cluste
 Pierwsza rzecz o jakiej musicie wiedzieć, to to, że żeby pisać aplikacje na sparka nie potrzebujecie niczego pobierać – InteliJ zrobi wszystko za was. Musicie tylko w pliku `build.sbt` zdefiniować z jakiej wersji sparka chcecie korzystać. Będziemy uruchamiać aplikacje w trybie standalone – czyli lokalnie, na jednym komputerze.
 
 Wersje bibliotek definiuje się dodając następującą linijkę do `.settings`:
+
 ```
 libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.3.1"
 ```
@@ -170,7 +171,7 @@ object WordCountDemo {
 
 ## Spark i obliczanie PI metodą Monte Carlo
 
-Jak obliczyć PI? Jeżeli pamiętacie wzór na pole koła, to wygląda on  tak:
+Jak obliczyć PI? Jeżeli pamiętacie wzór na pole koła, to wygląda on tak:
 $$P = \pi r^2$$
 Wokół tego pola narysować możemy kwadrat, którego boki są stycznymi okręgu.
 Pole tego kwadratu wynosić będzie:
@@ -180,7 +181,7 @@ Teraz ich stosunek wynosi:
 
 ![](img/pi-1.png)
 
-i zawiera w sobie liczbę $\pi$! Możemy to wykorzystać. Będziemy losować punkty należące do kwadratu. Pole koła zastąpimy liczbą punktów należących do koła. A liczba punktów należących do kwadratu, to liczba wszystkich punktów. 
+i zawiera w sobie liczbę $\pi$! Możemy to wykorzystać. Będziemy losować punkty należące do kwadratu. Pole koła zastąpimy liczbą punktów należących do koła. A liczba punktów należących do kwadratu, to liczba wszystkich punktów.
 
 ![](img/pi-2.png)
 
