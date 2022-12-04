@@ -88,4 +88,50 @@ println("Flatten: ", grouped.values.flatten)
 
 ## Co to Spark i jak go postawić
 
-[Spark standalone](https://spark.apache.org/docs/latest/spark-standalone.html)
+Apache Spark to framework do przetwarzania danych w ramach rozproszonego systemu obliczeniowego. Jest to wydajne narzędzie do pracy z dużymi zbiorami danych, umożliwiające wykonywanie wielowątkowych obliczeń na rozproszonych zasobach obliczeniowych. Pozwala na szybkie przetwarzanie danych w pamięci i umożliwia stworzenie skalowalnych aplikacji do analizy danych.
+
+Typowe scenariusze dla danych big data, które można wykonywać z pomocą Apache Spark:
+
+1. Filtrowanie
+2. Sortowanie
+3. Agregowanie
+4. Łączenie źródeł danych
+5. Czyszczenie danych
+6. Deduplikacja
+7. Walidacja danych
+
+**Komponenty sparka**
+
+Aplikacje Sparka działają jako procesy w klastrze obliczeniowym, zarządzane są przez obiekt `SparkContext` w programie który napiszecie, nazwanym `Driver Program`.
+
+Uruchamianie aplikacji zaczyna się od `SparkContext`, łączy się on z `Cluster Manager`, który odpowiada za przydzielenie zasobów. Po połączeniu `Cluster Manager`, przydziela on naszej aplikacji `Executor`y, czyli procesy, w których wykonywać możemy obliczenia oraz przechowywać dane. Następnie kod naszej aplikacji jest wysyłany to `Executor`ów. I ostatecznie `SparkContext` nakazuje `Executor`om wykonywać `Task`i.
+
+![cluster-overview](img/cluster-overview.png)
+
+### Uruchamianie Sparka lokalnie
+
+Pierwsza rzecz o jakiej musicie wiedzieć, to to, że żeby pisać aplikacje na sparka nie potrzebujecie niczego pobierać – InteliJ zrobi wszystko za was. Musicie tylko w pliku `build.sbt` zdefiniować z jakiej wersji sparka chcecie korzystać. Będziemy uruchamiać aplikacje w trybie standalone – czyli lokalnie, na jednym komputerze.
+
+Wersje bibliotek definiuje się dodając następującą linijkę do `.settings`:
+```
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.3.1"
+```
+
+Przykładowy plik `build.sbt` po dodaniu zależności:
+
+```sbt
+ThisBuild / version := "0.1.0-SNAPSHOT"
+
+ThisBuild / scalaVersion := "2.13.10"
+
+lazy val root = (project in file("."))
+  .settings(
+    name := "HelloSpark",
+    libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.3.1"
+  )
+```
+
+**A dlaczego nie uruchamiamy Sparka w klastrze?**
+
+Niestety nie jest to takie proste na systemie windows bez dostępu do konta administratora. Dla zainteresowanych podrzucam artykuł jak to zrobić: https://phoenixnap.com/kb/install-spark-on-windows-10
+
