@@ -167,3 +167,58 @@ object WordCountDemo {
   }
 }
 ```
+
+## Spark i obliczanie PI metodą Monte Carlo
+
+Jak obliczyć PI? Jeżeli pamiętacie wzór na pole koła, to wygląda on  tak:
+$$
+P = \pi r^2
+$$
+Wokół tego pola narysować możemy kwadrat, którego boki są stycznymi okręgu.
+Pole tego kwadratu wynosić będzie:
+$$
+P = (2r)^2 = 4r^2
+$$
+
+Teraz ich stosunek wynosi:
+
+![](img/pi-1.png)
+
+i zawiera w sobie liczbę $\pi$! Możemy to wykorzystać. Będziemy losować punkty należące do kwadratu. Pole koła zastąpimy liczbą punktów należących do koła. A liczba punktów należących do kwadratu, to liczba wszystkich punktów. 
+
+![](img/pi-2.png)
+
+Tak oto dostajemy wzór:
+$$
+\pi = 4 \frac{P_\circ}{P_\square} \approx 4 \frac{\#czerwone}{\#wszystkie}
+$$
+
+```scala
+import org.apache.spark.sql.SparkSession
+import scala.math.random
+
+object PiDemo {
+  def main(args: Array[String]): Unit = {
+    // Setup SparkContext
+    val sparkSession = SparkSession.builder
+      .master("local[4]")
+      .appName("Simple app")
+      .getOrCreate()
+    val sc = sparkSession.sparkContext
+
+    // Liczba kropek
+    val ndots = math.min(10_000_000L, Int.MaxValue).toInt
+
+    val count = sc.parallelize(1 to ndots, 10)
+      .map {
+        i =>
+          val x = random * 2 - 1
+          val y = random * 2 - 1
+          if (x*x + y*y <= 1) 1 else 0
+      }
+      .sum()
+    println(s"Pi jest równe: ${4 * count / ndots}")
+  }
+}
+
+```
