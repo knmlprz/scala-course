@@ -185,7 +185,7 @@ i zawiera w sobie liczbę $\pi$! Możemy to wykorzystać. Będziemy losować pun
 ![](img/pi-2.png)
 
 Tak oto dostajemy wzór:
-$$\pi = 4 \frac{P_\circ}{P_\square} \approx 4 \frac{\#czerwone}{\#wszystkie$$
+$$\pi = 4 \frac{P_\circ}{P_\square} \approx 4 \frac{\#czerwone}{\#wszystkie}$$
 
 ```scala
 import org.apache.spark.sql.SparkSession
