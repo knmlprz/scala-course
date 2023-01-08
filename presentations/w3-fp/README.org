@@ -1,0 +1,115 @@
+#+title: Programowanie funkcyjne
+#+startup: beamer
+#+beamer_theme: Luebeck
+#+beamer_color_theme: structure
+#+beamer_font_theme: professionalfonts
+#+latex_class: beamer
+#+latex_class_options: [presentation]
+#+author: Patryk Gronkiewicz
+#+language: pl
+#+date: 2022-12-06
+#+options: toc:nil tags:nil todo:nil
+#+latex_header_extra: \institute[KNML]{KN Machine Learning}
+#+latex_header_extra: \setbeamercovered{transparent}
+#+latex_header_extra: \newtheorem{uw}{Uwaga}[section]
+#+latex_header_extra: \newtheorem{prz}{Przykład}[section]
+#+latex_header_extra: \newtheorem{deff}{Definicja}[section]
+
+* Co to jest to całe FP?
+#+begin_deff
+Programowanie funkcyjne jest *paradygmatem programowania*, gdzie programy są tworzone przez stosowanie i składanie funkcji.
+Jest *deklaratywnym paradygmatem programowania* w którym definicje funkcji są drzewem wyrażeń, które mapuje wartości na inne wartości --- w przeciwieństwie do sekwencji *imperatywnych* wyrażeń *aktualizujących stan* programu[fn:wikidef]
+#+end_deff
+#+beamer: \pause
+Pojawia się tu dużo ciężkich określeń, jednak zacznijmy od początku.
+
+[fn:wikidef]https://en.wikipedia.org/wiki/Functional_programming (tłum. własne)
+* Paradygmat
+** Opis :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.65
+:END:
+Jest to ,,styl'' pisania kodu, czasem wymuszony przez język programowania.
+Angielska Wikipedia wyróżnia ich 74 (/sic!/).
+Nas w tym momencie interesują dwa (i pół): funkcyjny i imperatywny (oraz pochodna tego drugiego --- obiektowy).
+
+Definicję paradygmatu funkcyjnego już widzieliśmy, natomiast bez takich formalności --- paradygmat imperatywny to ,,typowe'' pisanie kodu znane z Pythona, C++ czy Javy.
+** Screenshot :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.25
+:END:
+#+attr_latex: :width 0.45\textwidth
+[[./img/paradigms.png]]
+* Czyste funkcje (/pure functions/)
+Czyste funkcje to takie, które:
+1. Dla *dokładnie takich samych* argumentów zwracają *dokładnie takie same* wartości;
+2. Nie mają *skutków ubocznych*.
+
+W Scali wszystkie funkcje, które interfejsują się z czymkolwiek poza innymi funkcjami *nie* są czyste --- np. src_scala[:exports code]{println} ma skutek uboczny (wypisanie na konsoli).
+
+# * Czyste funkcje (/pure functions/) c. d.
+#+begin_src scala :eval no
+// pure function
+val pureDouble = (x: Int) => x * 2
+// impure function
+val impureDouble = (x: Int) => {
+  val newX = x * 2
+  println(newX)
+  newX
+}
+fn(4); gn(4)
+#+end_src
+* Pętle
+#+attr_latex: :width 0.6\textwidth
+[[./img/neat_loops.jpg]]
+* Rekurencja
+** Żeby zrozumieć rekurencję
+ Musisz zrozumieć rekurencję
+*** Żeby zrozumieć rekurencję
+Musisz zrozumieć rekurencję
+**** Żeby zrozumieć rekurencję
+Musisz zrozumieć rekurencję
+* Rekurencja
+#+attr_latex: :width 0.8\textwidth
+[[./img/infinite_recursion.jpg]]
+* Rekurencja ogonowa (/tail recursion/)
+Pozwala ona na zastosowanie optymalizacji  --- kompilator zamiast zagnieżdżać kolejne wywołania ,,spłaszcza'' tę strukturę i pozbywa się rekurencji.
+** Zwykła rekurencja
+#+begin_src scala
+def factorial_regular(n: Int): Int =
+    if n == 0 then 1
+    else n * factorial_regular(n - 1)
+#+end_src
+** Rekurencja ogonowa
+#+begin_src scala
+@tailrec
+def factorial_tr(n: Int, acc: Int = 1): Int =
+    if n == 0 then acc
+    else factorial_tr(n - 1, acc * n)
+#+end_src
+* Rekurencja ogonowa (/tail recursion/)
+#+attr_latex: :width 0.6\textwidth
+[[./img/pooh.png]]
+* Funkcje anonimowe (tzw. lambdy)
+Funkcje, które żyją tak krótko, że nie nadajemy nawet im nazwy --- są to tzw. lambdy.
+W scali mają składnię src_scala[:exports code]{(arg1, arg2, ...) => res}.
+Jeśli jest tylko jeden argument --- nawias można pominąć.
+Czasem występuje jeszcze prostszy zapis z podkreśleniami (Funkcje niżej są jednoznaczne).
+#+begin_src scala
+(arg1: Int, arg2: Int) = arg1 * arg2
+_ * _
+#+end_src
+Warto zauważyć, że w drugim przypadku w obu sytuacjach argumentem jest podkreślenie --- po każdym jej wystąpieniu brany jest następny argument.
+* Funkcje wyższego rzędu (/Higher Order Functions/, /HOF/)
+Funkcje przyjmujące inne funkcje jako argumenty.
+#+begin_src scala
+val greater_than_1: Int => Boolean = (x: Int) => x > 1
+val double: Int => Int = (x: Int) => x * 2
+val sum: (Int, Int) => Int = (x: Int, y: Int) => x+y
+List(1,2,3).filter(_>1).map(_*2).reduce(_+_)
+List(1,2,3).filter(greater_than_1).map(double).reduce(sum)
+#+end_src
+* Teoria teorią, ale do czego to się przydaje?
++ W data science! Cały Spark opiera się przede wszystkim na HOF. To samo Pandas/Pola.rs/inne biblioteki do ramek danych. No i cały język R.
++ W strumieniowym przetwarzaniu danych.
++ Przy odtwarzaniu rzeczy --- dużo łatwiej doprowadzić program do tego samego stanu mając ściśle zdefiniowane transformacje.
